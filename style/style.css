@@ -24,7 +24,7 @@ body {
      position: absolute;
      border-radius: 30px;
      z-index: 100;
-     top: 230px;
+     top: 200px;
      left: 100px;
      width: 400px;
      height: 60px;
@@ -50,4 +50,21 @@ body {
 
  #zip-code-input {
     
+ }
+
+ .search i {
+    font-size: 25px;
+    color: white;
+ }
+
+ .stores-list-container {
+     bottom: 20px;
+     border-radius: 30px;
+     width: 400px;
+     height: 300px;
+     position: absolute;
+     z-index: 100;
+     background: white;
+     left:100px;
+     top:300px;
  }
