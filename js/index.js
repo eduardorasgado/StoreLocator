@@ -2,6 +2,9 @@ var la = {
     lat: 34.052235,
     lng: -118.243683
 };
+// to be able to store the markers and remove them globally
+var mapMarker;
+
 function initMap() {
   // The location of Uluru
   //var uluru = {lat: -25.344, lng: 131.036};
@@ -72,20 +75,44 @@ function addressesLoader() {
 
 // google maps markers appending
 function addMapMarkers(markers) {
-    var mapMarkers;
+    // TODO: Check to create a map list or just remove all the markers into the 
+    // marker object
+    mapMarker = null;
+    // to be able to load information into the marker on click
+    var gMapsInfoWindow = new google.maps.InfoWindow();
+    //var mapBounds = new google.maps.LatLngBounds();
+
     var map = new google.maps.Map(
         document.getElementById('map'), {center: la, zoom:14});
-
+    //map.setTilt(50);
     for(let i = 0; i < markers.length; i++)
     {
         // creating a coordinates object to group more than one marker in google frame
         var markerPosition = new google.maps.LatLng(markers[i][1], markers[i][2]);
 
-        mapMarkers = new google.maps.Marker({
+        //mapBounds.extend(markerPosition);
+        mapMarker = new google.maps.Marker({
             position: markerPosition,
             map: map,
             title: markers[i][0]
         });
+
+        let content = `<span class='marker'>${markers[i][0]}</span>`;
+        // event that can be activate clicking a marker
+        google.maps.event.addListener(mapMarker, 
+            'click', 
+            (function(mapMarker) {
+                return function() {
+                    gMapsInfoWindow.setContent(content);
+                    gMapsInfoWindow.open(map, mapMarker);
+                }
+            })(mapMarker)
+            );
+        // all the markers should be visualized withing the map screen
+        //map.fitBounds(mapBounds);
+
+        // finally set zoom level
+        //var mapBoundListener = 
     }
 }
 

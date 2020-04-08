@@ -131,6 +131,13 @@ body {
     -webkit-transition: background 0.5s;
  }
 
+ .marker {
+     color: #ef5350;
+     font-size: medium;
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     font-weight: bold;
+ }
+
  /**
  To disable the map/satellite google maps button
  **/
