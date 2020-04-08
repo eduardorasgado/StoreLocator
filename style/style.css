@@ -31,8 +31,8 @@ body {
      top: 150px;
      left: 100px;
      width: 350px;
-     height: 60px;
-     background-color: #454E53;
+     height: 50px;
+     background-color: #f44336;
      display: flex;
  }
 
@@ -102,6 +102,9 @@ body {
     color: gainsboro;
  }
 
+ /**
+ To disable the map/satellite google maps button
+ **/
  .gm-style-mtc {
     display: none;
   }
