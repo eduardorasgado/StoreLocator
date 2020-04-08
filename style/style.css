@@ -108,6 +108,11 @@ body {
      color: darkgrey;
  }
 
+ .store-container:hover .store-phone-number {
+    color: #454E53;
+    -webkit-transition: color 0.5s;
+}
+
  .store-container hr {
     color: gainsboro;
     position: absolute;
