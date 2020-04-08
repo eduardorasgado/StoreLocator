@@ -1,8 +1,14 @@
-## Design Link
+## Google Locator Application(Coding Challenge)
+Given the 6 figure Javascript Fullstack coding challenge from Clever Programmer I created this repository.
 
-https://www.figma.com/file/HuauCfrLa39DV0lK76LLZb/Google-Maps?node-id=0%3A2
+## Steps followed in the course
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
 
-## FontAwesome Link
+## Results
 
-https://kit.fontawesome.com/c939d0e917.js
-
+![Screenshot](.gitutils/Screenshot_2020-04-07.png?raw=true "Google Locator")
