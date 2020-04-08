@@ -21,9 +21,10 @@ function addressLoader() {
     let addressDiv;
     let phoneDiv;
     let i = 0;
+    let hr;
     for(let store of stores) {
         if(i === 4) break;
-        data = `${store.address.streetAddressLine1} ${store.address.countrySubdivisionCode}`
+        data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
         storeContainer = document.createElement("div");
         storeContainer.className = "store-container";
 
@@ -34,9 +35,12 @@ function addressLoader() {
         phoneDiv = document.createElement("div");
         phoneDiv.className = "store-phone-number";
         phoneDiv.innerHTML = store.phoneNumber;
+        hr = document.createElement("hr");
+        hr.className = "store-divider";
 
         storeContainer.appendChild(addressDiv);
         storeContainer.appendChild(phoneDiv);
+        storeContainer.appendChild(hr);
         storeList.appendChild(storeContainer);
         ++i;
     }

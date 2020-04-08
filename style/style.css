@@ -14,7 +14,7 @@ body {
 
  .title {
      position: absolute;
-     top:80px;
+     top:40px;
      left: 100px;
      z-index:100;
      color: #333;
@@ -28,9 +28,9 @@ body {
      position: absolute;
      border-radius: 30px;
      z-index: 100;
-     top: 200px;
+     top: 150px;
      left: 100px;
-     width: 400px;
+     width: 350px;
      height: 60px;
      background-color: #454E53;
      display: flex;
@@ -65,11 +65,43 @@ body {
  .stores-list-container {
      bottom: 20px;
      border-radius: 30px;
-     width: 400px;
-     height: 300px;
+     width: 350px;
      position: absolute;
-     z-index: 100;
+     z-index: 9999;
      background: white;
      left:100px;
-     top:300px;
+     top:240px;
  }
+
+ .stores-list-container .stores-list {
+     padding-left: 20px;
+     padding-top: 20px;
+     padding-right: 20px;
+    
+ }
+
+ .store-container {
+     height: 100px;
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     margin: auto;
+ }
+
+ .store-address {
+     width: 250px;
+     color: #454E53;
+ }
+
+ .store-phone-number {
+     margin-top: 10px;
+     width: 250px;
+     font-size: small;
+     color: darkgrey;
+ }
+
+ .store-container hr {
+    color: gainsboro;
+ }
+
+ .gm-style-mtc {
+    display: none;
+  }
