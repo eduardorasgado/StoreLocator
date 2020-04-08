@@ -8,16 +8,19 @@ var la = {
 };
 
 var map;
-// to be able to store the markers and remove them globally
+var markers = [];
+var infoWindow;
+var mapBounds;
 
 function initMap() {
   // The location of Uluru
   //var uluru = {lat: -25.344, lng: 131.036};
   // The map, centered at Uluru
-  var map = new google.maps.Map(
+  map = new google.maps.Map(
       document.getElementById('map'), {center: la, zoom:14});
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: la, map: map});
+  showStoresMarkers();
 }
 
 function displayStores() {
@@ -49,3 +52,51 @@ function displayStores() {
 
     document.querySelector('.stores-list').innerHTML = storesHtml;
 }
+
+function showStoresMarkers() {
+    mapBounds = new google.maps.LatLngBounds();
+
+    let store, index;
+    for([index, store] of stores.entries()) {
+
+        let latLng = new google.maps.LatLng(
+            store['coordinates']["latitude"],
+            store['coordinates']["longitude"]
+        );
+
+        let name = store["name"];
+        let address = store["addressLines"];
+
+        mapBounds.extend(latLng);
+
+        createMarker(index, latLng, name, address);
+    }
+    map.fitBounds(mapBounds);
+}
+
+function createMarker(index, location, name, address) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+    var marker = new google.maps.Marker({
+      position: location,
+      label: `${index}`,
+      map: map
+    });
+
+    infoWindow = new google.maps.InfoWindow();
+    let content = `<span class='marker'>${name} ${address}</span>`;
+    // event that can be activate clicking a marker
+    google.maps.event.addListener(marker, 
+        'click', 
+        (function(marker) {
+            return function() {
+                infoWindow.setContent(content);
+                infoWindow.open(map, marker);
+            }
+        })(marker)
+    );
+
+
+    markers.push(marker)
+  }
+  
