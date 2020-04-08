@@ -2,8 +2,12 @@ var la = {
     lat: 34.052235,
     lng: -118.243683
 };
+
+var map;
 // to be able to store the markers and remove them globally
 var mapMarker;
+// mapBound should be global to fix it at the markers location
+var mapBoundListener;
 
 function initMap() {
   // The location of Uluru
@@ -82,7 +86,7 @@ function addMapMarkers(markers) {
     var gMapsInfoWindow = new google.maps.InfoWindow();
     var mapBounds = new google.maps.LatLngBounds();
 
-    var map = new google.maps.Map(
+    map = new google.maps.Map(
         document.getElementById('map'), {center: la, zoom:14});
 
     for(let i = 0; i < markers.length; i++)
@@ -113,10 +117,23 @@ function addMapMarkers(markers) {
         // all the markers should be visualized withing the map screen
         // applying the max visualization area
         map.fitBounds(mapBounds);
-
-        // finally set zoom level
-        //var mapBoundListener = 
+        // fix the map
+        setMapBoundsFixed();
     }
+}
+
+/**
+ * Fix the map at the max area given the current markers group
+ * The map cannot move to avoid losing the locations focus
+ */
+function setMapBoundsFixed() {
+    // finally set zoom level fixed, no way user can change
+    mapBoundListener = google.maps.event.addListener((map),
+        'bounds_changed', function(event) {
+            this.setZoom(14);
+            google.maps.event.removeListener(mapBoundListener);
+        }
+    );
 }
 
   
