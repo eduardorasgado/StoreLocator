@@ -80,17 +80,19 @@ function addMapMarkers(markers) {
     mapMarker = null;
     // to be able to load information into the marker on click
     var gMapsInfoWindow = new google.maps.InfoWindow();
-    //var mapBounds = new google.maps.LatLngBounds();
+    var mapBounds = new google.maps.LatLngBounds();
 
     var map = new google.maps.Map(
         document.getElementById('map'), {center: la, zoom:14});
-    //map.setTilt(50);
+
     for(let i = 0; i < markers.length; i++)
     {
         // creating a coordinates object to group more than one marker in google frame
         var markerPosition = new google.maps.LatLng(markers[i][1], markers[i][2]);
 
-        //mapBounds.extend(markerPosition);
+        // extending the area of screen vision given the location of the markers
+        mapBounds.extend(markerPosition);
+
         mapMarker = new google.maps.Marker({
             position: markerPosition,
             map: map,
@@ -109,7 +111,8 @@ function addMapMarkers(markers) {
             })(mapMarker)
             );
         // all the markers should be visualized withing the map screen
-        //map.fitBounds(mapBounds);
+        // applying the max visualization area
+        map.fitBounds(mapBounds);
 
         // finally set zoom level
         //var mapBoundListener = 
