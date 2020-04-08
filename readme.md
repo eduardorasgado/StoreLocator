@@ -14,7 +14,8 @@ Given the 6 figure Javascript Fullstack coding challenge from Clever Programmer 
 - Style the individual store item in the stores list
 - show all the stores in the stores list based on real world data
 - show the marker based on real world store data
-- Show the info window when you click a marker
+- Show the info window when you click on the individual store
+- Add a beautiful transition on hover the individual store
  
 ## Results
 
