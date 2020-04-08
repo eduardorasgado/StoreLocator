@@ -84,6 +84,7 @@ body {
      height: 100px;
      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      margin: auto;
+     position: relative;
  }
 
  .store-address {
@@ -100,6 +101,34 @@ body {
 
  .store-container hr {
     color: gainsboro;
+ }
+
+ .circle {
+     width: 26px;
+     height: 26px;
+     -webkit-border-radius: 25px;
+     -moz-border-radius: 25px;
+     border-radius: 50%;
+     z-index: 9999;
+     /**
+     on focus #ef5350
+     **/
+     background: #ef9a9a;
+     position: absolute;
+     left: 260px;
+     top: 12px;
+     text-align: center;
+     -webkit-transition: background 0.5s;
+  }
+
+  .circle span {
+    color: white;
+    font-size: small;
+  }
+
+  .store-container:hover .circle {
+    background: #ef5350;
+    -webkit-transition: background 0.5s;
  }
 
  /**

@@ -22,15 +22,24 @@ function addressLoader() {
     let phoneDiv;
     let i = 0;
     let hr;
+    let circle;
+    let cicleSpan;
     for(let store of stores) {
         if(i === 4) break;
         data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
+
         storeContainer = document.createElement("div");
         storeContainer.className = "store-container";
 
+        cicleSpan = document.createElement("span");
+        cicleSpan.innerHTML = i;
+        circle = document.createElement("div");
+        circle.className = "circle";
+        circle.appendChild(cicleSpan);
         addressDiv = document.createElement("div");
         addressDiv.className = "store-address";
         addressDiv.innerHTML = data;
+        addressDiv.appendChild(circle);
 
         phoneDiv = document.createElement("div");
         phoneDiv.className = "store-phone-number";
