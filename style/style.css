@@ -14,7 +14,7 @@ body {
 
  .title {
      position: absolute;
-     top:40px;
+     top:30px;
      left: 100px;
      z-index:100;
      color: #333;
@@ -28,7 +28,7 @@ body {
      position: absolute;
      border-radius: 30px;
      z-index: 100;
-     top: 150px;
+     top: 140px;
      left: 100px;
      width: 350px;
      height: 50px;
@@ -70,7 +70,7 @@ body {
      z-index: 9999;
      background: white;
      left:100px;
-     top:240px;
+     top:220px;
  }
 
  .stores-list-container .stores-list {
@@ -81,12 +81,21 @@ body {
  }
 
  .store-container {
-     height: 100px;
+     height: 80px;
      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      margin: auto;
+     padding-top: 20px;
+     padding-left: 20px;
      position: relative;
+     border-radius: 25px;
+     background-color: white;
+     -webkit-transition: background-color 0.5s;
  }
 
+ .store-container:hover {
+     background-color: lightgrey;
+     -webkit-transition: background-color 0.5s;
+ }
  .store-address {
      width: 250px;
      color: #454E53;
@@ -101,6 +110,11 @@ body {
 
  .store-container hr {
     color: gainsboro;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
  }
 
  .circle {
@@ -116,7 +130,7 @@ body {
      background: #ef9a9a;
      position: absolute;
      left: 260px;
-     top: 12px;
+     top: 32px;
      text-align: center;
      -webkit-transition: background 0.5s;
   }

@@ -50,7 +50,7 @@ function addressesLoader() {
         storeContainer.className = "store-container";
 
         cicleSpan = document.createElement("span");
-        cicleSpan.innerHTML = i;
+        cicleSpan.innerHTML = i+1;
         circle = document.createElement("div");
         circle.className = "circle";
         circle.appendChild(cicleSpan);
