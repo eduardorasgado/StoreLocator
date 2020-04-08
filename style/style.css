@@ -8,6 +8,7 @@ body {
 /* Set the size of the div element that contains the map */
 #map {
   height: 100vh;  /* The height is 400 pixels */
+  width: 100%;
   
  }
 
@@ -16,8 +17,11 @@ body {
      top:80px;
      left: 100px;
      z-index:100;
+     color: #333;
      font-size: 88px;
-     font-family: Arial, Helvetica, sans-serif ;
+     font-weight: bold;
+     text-transform: uppercase;
+
  }
 
  .search-container {
@@ -29,6 +33,15 @@ body {
      width: 400px;
      height: 60px;
      background-color: #454E53;
+     display: flex;
+ }
+
+ .search-container .search {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
  }
 
  .search-container input {
@@ -40,16 +53,8 @@ body {
     display: flex;
  }
 
- .search-container .search {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
- }
-
- #zip-code-input {
-    
+ .search-container input:focus {
+    outline: none;
  }
 
  .search i {
