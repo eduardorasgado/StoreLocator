@@ -21,9 +21,10 @@ function initMap() {
 }
 
 function displayStores() {
-    var storesHtml = '';
+    let storesHtml = '';
 
-    for(var store of stores) {
+    let index, store;
+    for([index, store] of stores.entries()) {
         var address = store["addressLines"];
         var phoneNumber = store["phoneNumber"]
         storesHtml += `
@@ -38,7 +39,7 @@ function displayStores() {
                 </div>
                 <div class="store-number-container">
                     <div class="store-number">
-                        1
+                        ${++index}
                     </div>
                 </div>
             </div>
