@@ -71,6 +71,7 @@ body {
      background: white;
      left:100px;
      top:220px;
+     overflow-y: scroll;
  }
 
  .stores-list-container .stores-list {
