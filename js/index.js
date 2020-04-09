@@ -15,7 +15,7 @@ var mapBounds;
 var gMapsInfoWindow;
 var mapOptions;
 var storeIcon;
-var positionLabelColor = "white";
+var positionLabelColor = "#ef9a9a";
 
 // Icons made by 
 // <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
@@ -38,7 +38,7 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
-    storeIcon = iconBase + 'shop.png';
+    storeIcon = iconBase + 'bags.png';
     mapOptions = {
         center: la, 
         zoom:14,
@@ -211,7 +211,7 @@ function addSingleMarker(index, latLng, name, address) {
         position: latLng,
         map: map,
         title: name,
-        label:{ text: `${index+1}`, color: positionLabelColor },
+        label:{ text: `${index+1}`, color: positionLabelColor,  },
         icon: storeIcon,
     });
 
