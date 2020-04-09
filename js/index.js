@@ -15,6 +15,10 @@ var mapBounds;
 var gMapsInfoWindow;
 var mapOptions;
 var storeIcon;
+var positionLabelColor = "white";
+
+// Icons made by 
+// <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 var iconBase = 'https://raw.githubusercontent.com/eduardorasgado/StoreLocator/master/assets/';
 /**
  * before page loads input search is located and a event is inserted within it
@@ -207,7 +211,7 @@ function addSingleMarker(index, latLng, name, address) {
         position: latLng,
         map: map,
         title: name,
-        label:`${index+1}`,
+        label:{ text: `${index+1}`, color: positionLabelColor },
         icon: storeIcon,
     });
 
