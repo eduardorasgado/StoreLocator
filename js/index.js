@@ -15,7 +15,7 @@ var mapBounds;
 var gMapsInfoWindow;
 var mapOptions;
 var storeIcon;
-var iconBase = 'https://github.com/eduardorasgado/StoreLocator/tree/master/assets/';
+var iconBase = 'https://raw.githubusercontent.com/eduardorasgado/StoreLocator/master/assets/';
 /**
  * before page loads input search is located and a event is inserted within it
  */
