@@ -52,6 +52,10 @@ body {
     border: none;
     display: flex;
  }
+ ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #FAA8A2;
+    opacity: 1; /* Firefox */
+  }  
 
  .search-container input:focus {
     outline: none;
@@ -60,6 +64,23 @@ body {
  .search i {
     font-size: 25px;
     color: white;
+ }
+ 
+ .blured-container {
+     position: absolute;
+     width: 350px;
+     opacity: 0.8;
+     left:100px;
+     top:220px;
+     bottom: 20px;
+     border-radius: 30px;
+     -webkit-filter: blur(5px);
+     -moz-filter: blur(5px);
+     -o-filter: blur(5px);
+     -ms-filter: blur(5px);
+     filter: blur(5px);
+     z-index: 9999;
+     background: white;
  }
 
  .stores-list-container {
@@ -72,12 +93,22 @@ body {
      left:100px;
      top:220px;
      overflow-y: scroll;
+     background: transparent;
  }
 
- .stores-list-container ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
+ ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+::-webkit-scrollbar-thumb {
+    background: rgba(51,51,51,0.4);
+    border-radius: 10px;
+  }
 
  .stores-list-container .stores-list {
      padding-left: 20px;

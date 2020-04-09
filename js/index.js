@@ -12,10 +12,10 @@ var mapBoundListener;
 var currentStores;
 var searchInput;
 
+/**
+ * before page loads input search is located and a event is inserted within it
+ */
 window.onload = () => {
-    // loading and storing all the stores within the store data
-    //currentStores = getAddressesByZipCode();
-
     searchInput = document.getElementById("zip-code-input");
     searchInput.addEventListener("keyup",function(event) {
         // number 13 is enter
@@ -43,13 +43,18 @@ function initMap() {
   addressesLoader();
 }
 
+/**
+ * take the search input content and loads the addresses and the markers
+ */
 function loadScreenDataByZipCode() {
     let zipCode = searchInput.value;
     if(zipCode) {
         currentStores = getAddressesByZipCode(zipCode);
-        addressesLoader();
-        //addMapMarkers();
+    } else{ // if enter zip code is empty then store list loads every store
+        currentStores = getAddressesByZipCode();
     }
+    addressesLoader();
+    //addMapMarkers();
 }
 
 /**
@@ -86,7 +91,7 @@ function addressesLoader() {
     let hr;
     let circle;
     let cicleSpan;
-    for(let store of currentStores) {
+    for(let [index, store] of currentStores.entries()) {
         //console.log(store)
         // rendering the first 4 stores, for the moment, this will be dynamic
         data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
@@ -95,7 +100,7 @@ function addressesLoader() {
         storeContainer.className = "store-container";
 
         cicleSpan = document.createElement("span");
-        cicleSpan.innerHTML = i+1;
+        cicleSpan.innerHTML = index+1;
         circle = document.createElement("div");
         circle.className = "circle";
         circle.appendChild(cicleSpan);
@@ -114,12 +119,15 @@ function addressesLoader() {
         storeContainer.appendChild(phoneDiv);
         storeContainer.appendChild(hr);
         storeList.appendChild(storeContainer);
-        ++i;
     }
 }
 
 
-// google maps markers appending
+/**
+ * google maps markers appending
+ * 
+ * @param {*} markers 
+ */
 function addMapMarkers(markers) {
     // appending all the coordinates from stores
     //markersList.push([store.brandName,
