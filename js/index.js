@@ -14,7 +14,8 @@ var searchInput;
 var mapBounds;
 var gMapsInfoWindow;
 var mapOptions;
-
+var storeIcon;
+var iconBase = 'https://github.com/eduardorasgado/StoreLocator/tree/master/assets/';
 /**
  * before page loads input search is located and a event is inserted within it
  */
@@ -33,22 +34,23 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
-  mapOptions = {
-    center: la, 
-    zoom:14,
-    styles: styleOptions
-  };
-  // The location of Uluru
-  //var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), mapOptions);
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: la, map: map});  
+    storeIcon = iconBase + 'shop.png';
+    mapOptions = {
+        center: la, 
+        zoom:14,
+        styles: styleOptions
+    };
+    // The location of Uluru
+    //var uluru = {lat: -25.344, lng: 131.036};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), mapOptions);
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: la, map: map});  
 
-  // listing all the stores inmediately the page has loaded
-  currentStores = getAddressesByZipCode();
-  addressesLoader();
+    // listing all the stores inmediately the page has loaded
+    currentStores = getAddressesByZipCode();
+    addressesLoader();
 }
 
 /**
@@ -205,7 +207,8 @@ function addSingleMarker(index, latLng, name, address) {
         position: latLng,
         map: map,
         title: name,
-        label:`${index+1}`
+        label:`${index+1}`,
+        icon: storeIcon,
     });
 
     // to be able to handle markers in another moment
