@@ -1,6 +1,4 @@
-window.onload = () => {
-    displayStores();
-}
+
 
 var la = {
     lat: 34.052235,
@@ -20,7 +18,35 @@ function initMap() {
       document.getElementById('map'), {center: la, zoom:14});
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: la, map: map});
+  displayStores();
   showStoresMarkers();
+  setAndClickListener();
+
+}
+
+function searchStores() {
+    var foundStores = [];
+    var zipCode = document.getElementById('zip-code-input').nodeValue;
+    for(var store of stores) {
+        var postal = store['address']['postalCode'].substring(0, 5);
+        if(postal === zipCode) {
+            foundStores.push(store);
+        }
+    }
+    displayStores(foundStores);
+    showStoresMarkers(foundStores);
+}
+
+function setAndClickListener() {
+    // actually need to target all the stores
+    var storeElements = document.querySelectorAll('.store-container');
+    
+    storeElements.forEach(function(storeElement, index) {
+        storeElement.addEventListener('click', 
+            function() {
+                new google.maps.event.trigger(markers[index], 'click');
+            })
+    })
 }
 
 function displayStores() {
@@ -65,16 +91,17 @@ function showStoresMarkers() {
         );
 
         let name = store["name"];
-        let address = store["addressLines"];
+        let openStatusText = store['openStatusText'];
+        let address = store["addressLines"][0];
 
         mapBounds.extend(latLng);
 
-        createMarker(index, latLng, name, address);
+        createMarker(index, latLng, name, address, openStatusText);
     }
     map.fitBounds(mapBounds);
 }
 
-function createMarker(index, location, name, address) {
+function createMarker(index, location, name, address, openStatusText) {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
     var marker = new google.maps.Marker({
@@ -84,13 +111,26 @@ function createMarker(index, location, name, address) {
     });
 
     infoWindow = new google.maps.InfoWindow();
-    let content = `<span class='marker'>${name} ${address}</span>`;
+    let html = `
+        <div class='store-info-window'>
+            <div class='store-info-name'>
+                ${name} 
+            </div>
+            <div class='store-info-address'>
+                ${address}
+            </div>
+            <div class=''>
+                ${openStatusText}
+            </div>
+        </div>
+    `;
+    
     // event that can be activate clicking a marker
     google.maps.event.addListener(marker, 
         'click', 
         (function(marker) {
             return function() {
-                infoWindow.setContent(content);
+                infoWindow.setContent(html);
                 infoWindow.open(map, marker);
             }
         })(marker)

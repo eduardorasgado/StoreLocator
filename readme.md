@@ -15,6 +15,11 @@ Given the 6 figure Javascript Fullstack coding challenge from Clever Programmer 
 - show all the stores in the stores list based on real world data
 - show the marker based on real world store data
 - Show the info window when you click on the individual store
+
+## Plan of Action day 3
+- Complete the stylinf for the marker info window
+- Open the info window marker on store selection in stores list
+- Allow a user to search for the stores in a zip code
 - Add a beautiful transition on hover the individual store
  
 ## Results

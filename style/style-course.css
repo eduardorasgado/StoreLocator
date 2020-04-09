@@ -60,6 +60,7 @@ body {
  .search i {
     font-size: 25px;
     color: white;
+    cursor: pointer;
  }
 
  .stores-list-container {
@@ -87,6 +88,7 @@ body {
  .store-container {
      display: flex;
      border-bottom: 1px solid #979797;
+     cursor: pointer;
  }
 
  .store-info-container {
@@ -127,4 +129,3 @@ body {
      font-size: 12px;
      
  }
-
