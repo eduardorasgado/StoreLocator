@@ -125,6 +125,7 @@ body {
  .store-container:hover {
      background-color: lightgrey;
      -webkit-transition: background-color 0.5s;
+     cursor: pointer;
  }
 
  .stores-list-empty {
