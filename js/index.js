@@ -15,7 +15,7 @@ var mapBounds;
 var gMapsInfoWindow;
 var mapOptions;
 var storeIcon;
-var positionLabelColor = "#ef9a9a";
+var positionLabelColor = "#eb3a44";
 
 // Icons made by 
 // <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
@@ -38,7 +38,7 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
-    storeIcon = iconBase + 'bags.png';
+    storeIcon = iconBase + 'locator.svg';
     mapOptions = {
         center: la, 
         zoom:14,
@@ -206,13 +206,28 @@ function addMapMarkers() {
 
 function addSingleMarker(index, latLng, name, address) {
     let content = `<span class='marker'>${name} ${address}</span>`;
+    
+    var markerIcon = {
+        url: storeIcon,
+        scaledSize: new google.maps.Size(55, 60),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(32,65),
+        labelOrigin: new google.maps.Point(28,24)
+      };
 
     mapMarker = new google.maps.Marker({
         position: latLng,
         map: map,
+        animation: google.maps.Animation.DROP,
         title: name,
-        label:{ text: `${index+1}`, color: positionLabelColor,  },
-        icon: storeIcon,
+        label:{ 
+            text: `K${index+1}`, 
+            color: positionLabelColor,
+            fontSize: "12px",
+            fontWeight: "bold"
+    },
+        //icon: storeIcon,
+        icon: markerIcon
     });
 
     // to be able to handle markers in another moment
