@@ -270,6 +270,8 @@ function addInformationWindows() {
             schedule: store.schedule[0].hours,
             address: store.addressLines[0],
             phone: store.phoneNumber,
+            lat: store.coordinates.latitude,
+            lng: store.coordinates.longitude,
         };
         storesData.push(data);
     })
@@ -292,10 +294,12 @@ function addInformationWindows() {
 }
 
 function createInfoWindowContent(storeData) {
+    let lat = storeData.lat;
+    let lng = storeData.lng;
     return `
     <div class='marker'
         onclick="window.open(
-            'https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324', 'newLocation'
+            'https://www.google.com/maps/search/?api=1&query=${lat},${lng}', 'newLocation'
             );"
     >
         <div class='marker-header'>
