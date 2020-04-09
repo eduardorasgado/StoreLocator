@@ -213,6 +213,7 @@ color: #454E53;
     padding-top: 4px;
     padding-left: 10px;
     padding-right: 10px;
+    cursor: help;
 }
 
 .marker-header {
@@ -250,6 +251,11 @@ color: #454E53;
  .marker-body i {
      color: dodgerblue;
  }
+
+ .marker-body span {
+    padding-top: 8px;
+    display: block
+}
  /**
  To disable the map/satellite google maps button
  **/

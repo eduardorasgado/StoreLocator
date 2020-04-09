@@ -293,7 +293,11 @@ function addInformationWindows() {
 
 function createInfoWindowContent(storeData) {
     return `
-    <div class='marker'>
+    <div class='marker'
+        onclick="window.open(
+            'https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324', 'newLocation'
+            );"
+    >
         <div class='marker-header'>
             <div class='marker-header-title'>
                 ${storeData.name}
