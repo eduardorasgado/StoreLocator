@@ -258,13 +258,23 @@ function addInformationWindows() {
 function createInfoWindowContent(storeData) {
     return `
     <div class='marker'>
-        <div class='marker-title'>
-            ${storeData.name}
-            <span>${storeData.schedule}</span>
+        <div class='marker-header'>
+            <div class='marker-header-title'>
+                ${storeData.name}
+            </div>
+            <span class='marker-header-phone'>
+            ${storeData.schedule}
+            </span>
         </div>
         <div class='marker-body'>
-            <span>${storeData.address}</span>
-            <span>${storeData.phone}</span>
+            <span>
+                <i class="fas fa-location-arrow"></i>
+                ${storeData.address}
+            </span>
+            <span>
+                <i class="fas fa-phone-alt"></i>
+                ${storeData.phone}
+            </span>
         </div>
     </div>
     `;
