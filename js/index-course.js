@@ -1,4 +1,16 @@
+var foundStores;
+var searchInput;
 
+window.onload = () => {
+    searchInput = document.getElementById("zip-code-input");
+    searchInput.addEventListener("keyup",function(event) {
+        // number 13 is enter
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            searchStores();
+        }
+    })
+}
 
 var la = {
     lat: 34.052235,
@@ -18,26 +30,40 @@ function initMap() {
       document.getElementById('map'), {center: la, zoom:14});
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: la, map: map});
+  foundStores = stores;
   displayStores();
   showStoresMarkers();
-  setAndClickListener();
+  setOnClickListener();
 
 }
 
 function searchStores() {
-    var foundStores = [];
-    var zipCode = document.getElementById('zip-code-input').nodeValue;
+    foundStores = [];
+    var zipCode = document.getElementById('zip-code-input').value;
+
     for(var store of stores) {
         var postal = store['address']['postalCode'].substring(0, 5);
         if(postal === zipCode) {
             foundStores.push(store);
         }
-    }
-    displayStores(foundStores);
-    showStoresMarkers(foundStores);
+    }    
+    clearLocations();
+    displayStores();
+    showStoresMarkers();
+    setOnClickListener();
 }
 
-function setAndClickListener() {
+/**
+ * remove all the pinned markers
+ */
+function clearLocations() {
+    for(let marker of markers) {
+        marker.setMap = null;
+    }
+    markers = [];
+}
+
+function setOnClickListener() {
     // actually need to target all the stores
     var storeElements = document.querySelectorAll('.store-container');
     
@@ -53,7 +79,7 @@ function displayStores() {
     let storesHtml = '';
 
     let index, store;
-    for([index, store] of stores.entries()) {
+    for([index, store] of foundStores.entries()) {
         var address = store["addressLines"];
         var phoneNumber = store["phoneNumber"]
         storesHtml += `
@@ -80,10 +106,12 @@ function displayStores() {
 }
 
 function showStoresMarkers() {
+    map = new google.maps.Map(
+        document.getElementById('map'), {center: la, zoom:14});
     mapBounds = new google.maps.LatLngBounds();
 
     let store, index;
-    for([index, store] of stores.entries()) {
+    for([index, store] of foundStores.entries()) {
 
         let latLng = new google.maps.LatLng(
             store['coordinates']["latitude"],
@@ -106,7 +134,7 @@ function createMarker(index, location, name, address, openStatusText) {
     // from the array of alphabetical characters.
     var marker = new google.maps.Marker({
       position: location,
-      label: `${index}`,
+      label: `${index+1}`,
       map: map
     });
 
