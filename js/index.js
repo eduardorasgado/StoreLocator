@@ -13,6 +13,7 @@ var currentStores;
 var searchInput;
 var mapBounds;
 var gMapsInfoWindow;
+var mapOptions;
 
 /**
  * before page loads input search is located and a event is inserted within it
@@ -32,11 +33,16 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
+  mapOptions = {
+    center: la, 
+    zoom:14,
+    styles: styleOptions
+  };
   // The location of Uluru
   //var uluru = {lat: -25.344, lng: 131.036};
   // The map, centered at Uluru
   var map = new google.maps.Map(
-      document.getElementById('map'), {center: la, zoom:14});
+      document.getElementById('map'), mapOptions);
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: la, map: map});  
 
@@ -168,7 +174,7 @@ function addMapMarkers() {
     mapBounds = new google.maps.LatLngBounds();
 
     map = new google.maps.Map(
-        document.getElementById('map'), {center: la, zoom:14});
+        document.getElementById('map'), mapOptions);
 
     let index, store;
     for([index, store] of currentStores.entries())
@@ -213,7 +219,7 @@ function restoreMarkers() {
     // if there are no elements in currentStores means bad zip code
         // so show no markers
     map = new google.maps.Map(
-        document.getElementById('map'), {center: la, zoom:14});
+        document.getElementById('map'), mapOptions);
 
     for(let marker of markersList) {
         marker.setMap = null;
