@@ -11,6 +11,7 @@ var mapMarker;
 var mapBoundListener;
 var currentStores;
 var searchInput;
+var mapBounds;
 
 /**
  * before page loads input search is located and a event is inserted within it
@@ -54,7 +55,7 @@ function loadScreenDataByZipCode() {
         currentStores = getAddressesByZipCode();
     }
     addressesLoader();
-    //addMapMarkers();
+    addMapMarkers();
 }
 
 /**
@@ -151,39 +152,36 @@ function addressesLoader() {
  * 
  * @param {*} markers 
  */
-function addMapMarkers(markers) {
+function addMapMarkers() {
     // appending all the coordinates from stores
-    //markersList.push([store.brandName,
-    //    store.coordinates["latitude"],
-    //    store.coordinates["longitude"]]
-    //    )
-    
         // TODO: Check to create a map list or just remove all the markers into the 
     // marker object
-    mapMarker = null;
+    //mapMarker = null;
     // to be able to load information into the marker on click
+    // TODO: CHECK IF THESE VARS NEED TO BE GLOBAL
     var gMapsInfoWindow = new google.maps.InfoWindow();
-    var mapBounds = new google.maps.LatLngBounds();
+    mapBounds = new google.maps.LatLngBounds();
 
     map = new google.maps.Map(
         document.getElementById('map'), {center: la, zoom:14});
 
-    for(let i = 0; i < markers.length; i++)
+    let index, store;
+    for([index, store] of currentStores.entries())
     {
         // creating a coordinates object to group more than one marker in google frame
-        var markerPosition = new google.maps.LatLng(markers[i][1], markers[i][2]);
-
+        let markerPosition = new google.maps.LatLng(
+            store.coordinates["latitude"], 
+            store.coordinates["longitude"]
+        );
+        let name = store["name"];
+        let address = store["addressLines"];
+        addSingleMarker(index, markerPosition, name, address);
         // extending the area of screen vision given the location of the markers
         mapBounds.extend(markerPosition);
 
-        mapMarker = new google.maps.Marker({
-            position: markerPosition,
-            map: map,
-            title: markers[i][0]
-        });
-
         // dont forget to push the mapMarker to markersList
 
+        /**
         let content = `<span class='marker'>${markers[i][0]}</span>`;
         // event that can be activate clicking a marker
         google.maps.event.addListener(mapMarker, 
@@ -195,12 +193,31 @@ function addMapMarkers(markers) {
                 }
             })(mapMarker)
             );
-        // all the markers should be visualized withing the map screen
-        // applying the max visualization area
-        map.fitBounds(mapBounds);
+        
+        
         // fix the map
         setMapBoundsFixed();
+        **/
     }
+    // all the markers should be visualized withing the map screen
+    // applying the max visualization area
+    map.fitBounds(mapBounds);
+    // fix the map
+    setMapBoundsFixed();
+}
+
+function addSingleMarker(index, latLng, name, address) {
+    let content = `<span class='marker'>${name} ${address}</span>`;
+
+    mapMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: name,
+        label:`${index+1}`
+    });
+
+    // to be able to handle markers in another moment
+    markersList.push(mapMarker);
 }
 
 /**
