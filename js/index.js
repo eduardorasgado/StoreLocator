@@ -39,6 +39,7 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
+    searchInput = document.getElementById("zip-code-input");
     //storeIcon = iconBase + 'locator.svg';
     mapOptions = {
         center: la, 
@@ -55,7 +56,8 @@ function initMap() {
 
     // listing all the stores inmediately the page has loaded
     currentStores = getAddressesByZipCode();
-    addressesLoader();
+    //addressesLoader();
+    loadScreenDataByZipCode();
 }
 
 /**
@@ -296,11 +298,15 @@ function addInformationWindows() {
 function createInfoWindowContent(storeData) {
     let lat = storeData.lat;
     let lng = storeData.lng;
+
+    // onclick="window.location =
+    //         'https://www.google.com/maps/search/?api=1&query=${lat},${lng}';"
+
     return `
     <div class='marker'
-        onclick="window.open(
-            'https://www.google.com/maps/search/?api=1&query=${lat},${lng}', 'newLocation'
-            );"
+    onclick="window.open(
+        'https://www.google.com/maps/search/?api=1&query=${lat},${lng}', 'newLocation'
+        );"
     >
         <div class='marker-header'>
             <div class='marker-header-title'>
