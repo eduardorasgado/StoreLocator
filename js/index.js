@@ -8,6 +8,7 @@ var map;
 // to be able to store the markers and remove them globally
 var mapMarker;
 // mapBound should be global to fix it at the markers location
+var storesIds = [];
 var mapBoundListener;
 var currentStores;
 var searchInput;
@@ -19,7 +20,7 @@ var positionLabelColor = "#eb3a44";
 
 // Icons made by 
 // <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-var iconBase = 'https://raw.githubusercontent.com/eduardorasgado/StoreLocator/master/assets/';
+var iconBase = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDUxMS45OTkgNTExLjk5OSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjk5OSA1MTEuOTk5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIHN0eWxlPSJmaWxsOiNFRTM4NDA7IiBkPSJNNDU0Ljg0OCwxOTguODQ4YzAsMTU5LjIyNS0xNzkuNzUxLDMwNi42ODktMTc5Ljc1MSwzMDYuNjg5Yy0xMC41MDMsOC42MTctMjcuNjkyLDguNjE3LTM4LjE5NSwwCgljMCwwLTE3OS43NTEtMTQ3LjQ2NC0xNzkuNzUxLTMwNi42ODlDNTcuMTUzLDg5LjAyNywxNDYuMTgsMCwyNTYsMFM0NTQuODQ4LDg5LjAyNyw0NTQuODQ4LDE5OC44NDh6Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiNGRkUxRDY7IiBkPSJNMjU2LDI5OC44OWMtNTUuMTY0LDAtMTAwLjA0MS00NC44NzktMTAwLjA0MS0xMDAuMDQxUzIwMC44MzgsOTguODA2LDI1Niw5OC44MDYKCXMxMDAuMDQxLDQ0Ljg3OSwxMDAuMDQxLDEwMC4wNDFTMzExLjE2NCwyOTguODksMjU2LDI5OC44OXoiLz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==';
 /**
  * before page loads input search is located and a event is inserted within it
  */
@@ -38,7 +39,7 @@ window.onload = () => {
  * First time google maps load
  */
 function initMap() {
-    storeIcon = iconBase + 'locator.svg';
+    //storeIcon = iconBase + 'locator.svg';
     mapOptions = {
         center: la, 
         zoom:14,
@@ -99,6 +100,7 @@ function getAddressesByZipCode(zipCode = '') {
  * inserting every location within store data within the store list
  */
 function addressesLoader() {
+    storesIds = []; // reseting the id container list
     let storeListContainer = document.getElementsByClassName('stores-list-container')[0];
     
     storeListContainer.innerHTML = '';
@@ -132,12 +134,16 @@ function addressesLoader() {
         let circle;
         let cicleSpan;
         for(let [index, store] of currentStores.entries()) {
+            // saving the id of the current stores to add the specific
+            // eventListener to information window
+            storesIds.push(store.storeNumber);
             //console.log(store)
             // rendering the first 4 stores, for the moment, this will be dynamic
             data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
 
             storeContainer = document.createElement("div");
             storeContainer.className = "store-container";
+            storeContainer.id = store.storeNumber;
 
             cicleSpan = document.createElement("span");
             cicleSpan.innerHTML = index+1;
@@ -208,7 +214,7 @@ function addSingleMarker(index, latLng, name, address) {
     let content = `<span class='marker'>${name} ${address}</span>`;
     
     var markerIcon = {
-        url: storeIcon,
+        url: iconBase,
         scaledSize: new google.maps.Size(55, 60),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(32,65),
@@ -263,7 +269,7 @@ function addInformationWindows() {
             name: store.name,
             schedule: store.schedule[0].hours,
             address: store.addressLines[0],
-            phone: store.phoneNumber
+            phone: store.phoneNumber,
         };
         storesData.push(data);
     })
@@ -280,7 +286,9 @@ function addInformationWindows() {
                 }
             })(mapMarker)
         );
-    })
+    });
+
+    prepareStoresListeners(storesData);
 }
 
 function createInfoWindowContent(storeData) {
@@ -307,6 +315,26 @@ function createInfoWindowContent(storeData) {
     </div>
     `;
     
+}
+
+function prepareStoresListeners(storesData) {
+
+    // for every marker assume we have a store within storesIds
+    // we link a listener for every stor container
+    markersList.forEach((mapMarker, index) => {
+        
+        let storeListener = document.getElementById(storesIds[index]);
+        let content = createInfoWindowContent(storesData[index])
+
+        storeListener.addEventListener("click", 
+            (function(mapMarker) {
+                return function() {
+                    gMapsInfoWindow.setContent(content);
+                    gMapsInfoWindow.open(map, mapMarker);
+                }
+            })(mapMarker)
+        );
+    })
 }
 
 /**
