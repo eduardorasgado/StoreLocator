@@ -12,6 +12,7 @@ var mapBoundListener;
 var currentStores;
 var searchInput;
 var mapBounds;
+var gMapsInfoWindow;
 
 /**
  * before page loads input search is located and a event is inserted within it
@@ -56,15 +57,10 @@ function loadScreenDataByZipCode() {
     }
     addressesLoader();
     if(currentStores.length > 0) {
+        restoreMarkers(); // delete the current markers to append new ones
         addMapMarkers();
     } else {
-        // if there are no elements in currentStores means bad zip code
-        // so show no markers
-        map = new google.maps.Map(
-            document.getElementById('map'), {center: la, zoom:14});
-        for(let marker of markersList) {
-            marker.setMap = null;
-        }
+        restoreMarkers();
     }
 }
 
@@ -169,7 +165,6 @@ function addMapMarkers() {
     //mapMarker = null;
     // to be able to load information into the marker on click
     // TODO: CHECK IF THESE VARS NEED TO BE GLOBAL
-    var gMapsInfoWindow = new google.maps.InfoWindow();
     mapBounds = new google.maps.LatLngBounds();
 
     map = new google.maps.Map(
@@ -188,27 +183,8 @@ function addMapMarkers() {
         addSingleMarker(index, markerPosition, name, address);
         // extending the area of screen vision given the location of the markers
         mapBounds.extend(markerPosition);
-
-        // dont forget to push the mapMarker to markersList
-
-        /**
-        let content = `<span class='marker'>${markers[i][0]}</span>`;
-        // event that can be activate clicking a marker
-        google.maps.event.addListener(mapMarker, 
-            'click', 
-            (function(mapMarker) {
-                return function() {
-                    gMapsInfoWindow.setContent(content);
-                    gMapsInfoWindow.open(map, mapMarker);
-                }
-            })(mapMarker)
-            );
-        
-        
-        // fix the map
-        setMapBoundsFixed();
-        **/
     }
+    addInformationWindows();
     // all the markers should be visualized withing the map screen
     // applying the max visualization area
     map.fitBounds(mapBounds);
@@ -228,6 +204,53 @@ function addSingleMarker(index, latLng, name, address) {
 
     // to be able to handle markers in another moment
     markersList.push(mapMarker);
+}
+
+/**
+ * Every time a new input, a new zip code is needed, markers list should be empty
+ */
+function restoreMarkers() {
+    // if there are no elements in currentStores means bad zip code
+        // so show no markers
+    map = new google.maps.Map(
+        document.getElementById('map'), {center: la, zoom:14});
+
+    for(let marker of markersList) {
+        marker.setMap = null;
+    }
+    markersList = [];
+}
+
+/**
+ * Creates all the information windows events for the currentStores that already
+ * exists
+ */
+function addInformationWindows() {
+    gMapsInfoWindow = new google.maps.InfoWindow();
+
+    let storeData = [];
+    currentStores.forEach((store) => {
+        storeData.push(store.name);
+    })
+
+    markersList.forEach((mapMarker, i) => {
+        let content = createInfoWindowContent(storeData[i])
+        // event that can be activate clicking a marker
+        google.maps.event.addListener(mapMarker, 
+            'click', 
+            (function(mapMarker) {
+                return function() {
+                    gMapsInfoWindow.setContent(content);
+                    gMapsInfoWindow.open(map, mapMarker);
+                }
+            })(mapMarker)
+        );
+    })
+}
+
+function createInfoWindowContent(storeData) {
+    return `<span class='marker'>${storeData}</span>`;
+    
 }
 
 /**
