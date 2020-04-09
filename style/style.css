@@ -209,29 +209,41 @@ color: #454E53;
 .marker {
     font-size: medium;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
+    position: relative;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .marker-header {
     border-bottom: 1px solid lightgray;
+    position: relative;
 }
 
 .marker-header-title {
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
     color: #ef5350;
-    font-weight: bolder;
+    font-weight: bold;
     display: block;
 }
 
-.marker-header-phone {
+.marker-header-schedule {
+    display: block;
     color: #454E53;
+    font-size: small;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .marker-body {
     display: block;
     color: #454E53;
+    padding-bottom: 5px;
 }
 
 .marker-body span {
-    padding-top: 5px;
+    padding-top: 8px;
     display: block
 }
 

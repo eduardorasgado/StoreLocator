@@ -262,7 +262,7 @@ function createInfoWindowContent(storeData) {
             <div class='marker-header-title'>
                 ${storeData.name}
             </div>
-            <span class='marker-header-phone'>
+            <span class='marker-header-schedule'>
             ${storeData.schedule}
             </span>
         </div>
