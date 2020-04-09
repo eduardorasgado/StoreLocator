@@ -80,45 +80,68 @@ function getAddressesByZipCode(zipCode = '') {
  * inserting every location within store data within the store list
  */
 function addressesLoader() {
-    let storeList = document.getElementById('stores-list');
-    // cleaning the store list
-    storeList.innerHTML = '';
-    let data;
-    let storeContainer;
-    let addressDiv;
-    let phoneDiv;
-    let i = 0;
-    let hr;
-    let circle;
-    let cicleSpan;
-    for(let [index, store] of currentStores.entries()) {
-        //console.log(store)
-        // rendering the first 4 stores, for the moment, this will be dynamic
-        data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
+    let storeListContainer = document.getElementsByClassName('stores-list-container')[0];
+    
+    storeListContainer.innerHTML = '';
+    if(currentStores.length === 0) {
+        let html = `
+        <div class="stores-list-empty">
+            <span>
+                Nothing here
+                <i class="fas fa-binoculars"></i>
+            </span>
+            <span>What if you take a look at <span class="zip-optional">90036</span> zip code</span>
+        </div>
+        `
+        storeListContainer.innerHTML = html;
+    }
+    else {
+        let storesList = document.createElement("div");
+        storesList.className = "stores-list";
+        storesList.id = "stores-list";
+        // appending list as child and then we took it from the dom, to avoid
+        // time outs due to stores search
+        storeListContainer.appendChild(storesList);
+        
+        storesList = document.getElementById("stores-list");
 
-        storeContainer = document.createElement("div");
-        storeContainer.className = "store-container";
+        let data;
+        let storeContainer;
+        let addressDiv;
+        let phoneDiv;
+        let hr;
+        let circle;
+        let cicleSpan;
+        for(let [index, store] of currentStores.entries()) {
+            //console.log(store)
+            // rendering the first 4 stores, for the moment, this will be dynamic
+            data = `${store.addressLines[0]} <br>${store.addressLines[1]}`
 
-        cicleSpan = document.createElement("span");
-        cicleSpan.innerHTML = index+1;
-        circle = document.createElement("div");
-        circle.className = "circle";
-        circle.appendChild(cicleSpan);
-        addressDiv = document.createElement("div");
-        addressDiv.className = "store-address";
-        addressDiv.innerHTML = data;
-        addressDiv.appendChild(circle);
+            storeContainer = document.createElement("div");
+            storeContainer.className = "store-container";
 
-        phoneDiv = document.createElement("div");
-        phoneDiv.className = "store-phone-number";
-        phoneDiv.innerHTML = store.phoneNumber;
-        hr = document.createElement("hr");
-        hr.className = "store-divider";
+            cicleSpan = document.createElement("span");
+            cicleSpan.innerHTML = index+1;
+            circle = document.createElement("div");
+            circle.className = "circle";
+            circle.appendChild(cicleSpan);
+            addressDiv = document.createElement("div");
+            addressDiv.className = "store-address";
+            addressDiv.innerHTML = data;
+            addressDiv.appendChild(circle);
 
-        storeContainer.appendChild(addressDiv);
-        storeContainer.appendChild(phoneDiv);
-        storeContainer.appendChild(hr);
-        storeList.appendChild(storeContainer);
+            phoneDiv = document.createElement("div");
+            phoneDiv.className = "store-phone-number";
+            phoneDiv.innerHTML = store.phoneNumber;
+            hr = document.createElement("hr");
+            hr.className = "store-divider";
+
+            storeContainer.appendChild(addressDiv);
+            storeContainer.appendChild(phoneDiv);
+            storeContainer.appendChild(hr);
+            // appending the container within the list
+            storesList.appendChild(storeContainer);
+        }
     }
 }
 
@@ -158,6 +181,8 @@ function addMapMarkers(markers) {
             map: map,
             title: markers[i][0]
         });
+
+        // dont forget to push the mapMarker to markersList
 
         let content = `<span class='marker'>${markers[i][0]}</span>`;
         // event that can be activate clicking a marker
