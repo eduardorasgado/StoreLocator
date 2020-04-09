@@ -71,7 +71,13 @@ body {
      background: white;
      left:100px;
      top:220px;
+     overflow-y: scroll;
  }
+
+ .stores-list-container ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 
  .stores-list-container .stores-list {
      padding-left: 20px;
