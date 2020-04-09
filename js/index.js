@@ -228,13 +228,20 @@ function restoreMarkers() {
 function addInformationWindows() {
     gMapsInfoWindow = new google.maps.InfoWindow();
 
-    let storeData = [];
+    let storesData = [];
+    // we can optimize this section by taking the data in above sections
     currentStores.forEach((store) => {
-        storeData.push(store.name);
+        let data = {
+            name: store.name,
+            schedule: store.schedule[0].hours,
+            address: store.addressLines[0],
+            phone: store.phoneNumber
+        };
+        storesData.push(data);
     })
 
     markersList.forEach((mapMarker, i) => {
-        let content = createInfoWindowContent(storeData[i])
+        let content = createInfoWindowContent(storesData[i])
         // event that can be activate clicking a marker
         google.maps.event.addListener(mapMarker, 
             'click', 
@@ -249,7 +256,18 @@ function addInformationWindows() {
 }
 
 function createInfoWindowContent(storeData) {
-    return `<span class='marker'>${storeData}</span>`;
+    return `
+    <div class='marker'>
+        <div class='marker-title'>
+            ${storeData.name}
+            <span>${storeData.schedule}</span>
+        </div>
+        <div class='marker-body'>
+            <span>${storeData.address}</span>
+            <span>${storeData.phone}</span>
+        </div>
+    </div>
+    `;
     
 }
 
