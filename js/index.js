@@ -55,7 +55,17 @@ function loadScreenDataByZipCode() {
         currentStores = getAddressesByZipCode();
     }
     addressesLoader();
-    addMapMarkers();
+    if(currentStores.length > 0) {
+        addMapMarkers();
+    } else {
+        // if there are no elements in currentStores means bad zip code
+        // so show no markers
+        map = new google.maps.Map(
+            document.getElementById('map'), {center: la, zoom:14});
+        for(let marker of markersList) {
+            marker.setMap = null;
+        }
+    }
 }
 
 /**
